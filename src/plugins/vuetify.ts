@@ -10,6 +10,28 @@ export const vuetify = createVuetify({
     sets: { mdi },
   },
   theme: {
-    defaultTheme: 'light',
+    defaultTheme: 'greenAcres',
+    themes: {
+      greenAcres: {
+        dark: false,
+        colors: {
+          primary: '#2E7D32',
+          secondary: '#F9A825',
+          accent: '#F9A825',
+          background: '#F5F5F0',
+          surface: '#FFFFFF',
+          'on-surface': '#2C2C2C',
+          error: '#C62828',
+          success: '#2E7D32',
+          warning: '#F9A825',
+          info: '#5D7B6A',
+        },
+      },
+    },
+  },
+  defaults: {
+    VCard: {
+      rounded: 'lg',
+    },
   },
 })
