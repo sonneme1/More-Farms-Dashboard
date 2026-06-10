@@ -6,7 +6,7 @@ Primary stakeholder is the farm operator who needs a consolidated, at-a-glance v
 Think a clean, practical tool similar to a farm management app like FarmLogs or Granular.
 
 ## Data
-- Generate a fake dataset as a JSON file (src/data/farmMetrics.json).
+- Generate a fake dataset as a JSON file (src/data/metrics.json).
 - Data should represent a full crop year (2025 growing season) and include multiple fields on the farm.
 - Data is organized by **Field** and **Crop Type** (Corn or Soybeans) and should include:
 
