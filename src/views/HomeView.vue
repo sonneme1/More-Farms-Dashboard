@@ -353,7 +353,7 @@ const totalRevenueFiltered = computed(() => {
       <v-icon icon="mdi-sprout" size="28" class="ml-2" />
     </template>
     <v-app-bar-title class="font-weight-bold text-no-wrap">
-      Green Acres Farm Dashboard
+      More Family Farm Operations
     </v-app-bar-title>
     <v-spacer />
     <div class="d-none d-sm-flex align-center ga-3 pr-4" style="min-width: 360px">
@@ -427,7 +427,7 @@ const totalRevenueFiltered = computed(() => {
             </div>
             <div
               class="text-h4 font-weight-bold mt-1"
-              :style="{ color: CORN_COLOR }"
+              style="color: #2C2C2C"
             >
               ${{ cornCashPrice.toFixed(2) }}
             </div>
@@ -454,7 +454,7 @@ const totalRevenueFiltered = computed(() => {
             </div>
             <div
               class="text-h4 font-weight-bold mt-1"
-              :style="{ color: SOY_COLOR }"
+              style="color: #2C2C2C"
             >
               ${{ soyCashPrice.toFixed(2) }}
             </div>
@@ -479,7 +479,7 @@ const totalRevenueFiltered = computed(() => {
             <div class="text-caption text-medium-emphasis text-uppercase letter-spacing-1">
               Total Bushels in Storage
             </div>
-            <div class="text-h4 font-weight-bold mt-1 text-primary">
+            <div class="text-h4 font-weight-bold mt-1" style="color: #2C2C2C">
               {{ fmtNum(totalBushelsInStorage) }}
             </div>
             <div class="text-caption text-medium-emphasis">
@@ -494,7 +494,7 @@ const totalRevenueFiltered = computed(() => {
             <div class="text-caption text-medium-emphasis text-uppercase letter-spacing-1">
               Est. Inventory Value
             </div>
-            <div class="text-h4 font-weight-bold mt-1 text-primary">
+            <div class="text-h4 font-weight-bold mt-1" style="color: #2C2C2C">
               {{ fmtCurrency(inventoryValue) }}
             </div>
             <div class="text-caption text-medium-emphasis">
@@ -511,7 +511,7 @@ const totalRevenueFiltered = computed(() => {
             </div>
             <div
               class="text-h4 font-weight-bold mt-1"
-              :style="{ color: CORN_COLOR }"
+              style="color: #2C2C2C"
             >
               {{ cornAvgYield > 0 ? cornAvgYield.toFixed(1) : '—' }}
               <span class="text-body-1 text-medium-emphasis">bu/ac</span>
@@ -542,7 +542,7 @@ const totalRevenueFiltered = computed(() => {
             </div>
             <div
               class="text-h4 font-weight-bold mt-1"
-              :style="{ color: SOY_COLOR }"
+              style="color: #2C2C2C"
             >
               {{ soyAvgYield > 0 ? soyAvgYield.toFixed(1) : '—' }}
               <span class="text-body-1 text-medium-emphasis">bu/ac</span>
@@ -577,7 +577,11 @@ const totalRevenueFiltered = computed(() => {
                   2025 actual vs. 5-year average (bu/ac)
                 </div>
               </div>
-              <v-icon icon="mdi-chart-bar" color="primary" />
+              <div class="d-flex align-center ga-2">
+                <v-chip color="secondary" size="small" variant="flat">Corn</v-chip>
+                <v-chip color="primary" size="small" variant="flat">Soybeans</v-chip>
+                <v-icon icon="mdi-chart-bar" color="primary" class="ml-1" />
+              </div>
             </div>
             <div v-if="filteredFields.length === 0" class="text-center py-12 text-medium-emphasis">
               No fields match the current filters.
