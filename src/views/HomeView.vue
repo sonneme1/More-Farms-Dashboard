@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
+import { useDisplay } from 'vuetify'
 import { Bar, Line } from 'vue-chartjs'
 import {
   Chart as ChartJS,
@@ -67,6 +68,10 @@ const fin = metrics.financialSnapshot
 const cropOptions = ['All', 'Corn', 'Soybeans'] as const
 const cropFilter = ref<'All' | Crop>('All')
 const fieldFilter = ref<string>('All Fields')
+
+const { width } = useDisplay()
+const isCompact = computed(() => width.value <= 768)
+const filterMenuOpen = ref(false)
 
 const fieldOptions = computed(() => {
   const valid =
@@ -352,11 +357,15 @@ const totalRevenueFiltered = computed(() => {
     <template #prepend>
       <v-icon icon="mdi-sprout" size="28" class="ml-2" />
     </template>
-    <v-app-bar-title class="font-weight-bold text-no-wrap">
+    <v-app-bar-title class="font-weight-bold app-title">
       More Family Farm Operations
     </v-app-bar-title>
     <v-spacer />
-    <div class="d-none d-sm-flex align-center ga-3 pr-4" style="min-width: 360px">
+    <div
+      v-if="!isCompact"
+      class="d-flex align-center ga-3 pr-4"
+      style="min-width: 360px"
+    >
       <v-select
         v-model="cropFilter"
         :items="cropOptions as unknown as string[]"
@@ -382,37 +391,56 @@ const totalRevenueFiltered = computed(() => {
         style="max-width: 200px"
       />
     </div>
-  </v-app-bar>
 
-  <!-- Mobile filters -->
-  <v-app-bar
-    color="primary"
-    density="compact"
-    elevation="0"
-    class="d-flex d-sm-none"
-  >
-    <div class="d-flex align-center ga-2 px-3 w-100">
-      <v-select
-        v-model="cropFilter"
-        :items="cropOptions as unknown as string[]"
-        label="Crop"
-        density="compact"
-        variant="solo-filled"
-        bg-color="surface"
-        flat
-        hide-details
-      />
-      <v-select
-        v-model="fieldFilter"
-        :items="fieldOptions"
-        label="Field"
-        density="compact"
-        variant="solo-filled"
-        bg-color="surface"
-        flat
-        hide-details
-      />
-    </div>
+    <v-menu
+      v-if="isCompact"
+      v-model="filterMenuOpen"
+      :close-on-content-click="false"
+      location="bottom end"
+      offset="8"
+    >
+      <template #activator="{ props }">
+        <v-btn
+          v-bind="props"
+          icon="mdi-menu"
+          variant="text"
+          aria-label="Open filters"
+          class="mr-2"
+        />
+      </template>
+      <v-card min-width="260" class="pa-4" elevation="3">
+        <div class="text-overline text-medium-emphasis mb-2">Filters</div>
+        <v-select
+          v-model="cropFilter"
+          :items="cropOptions as unknown as string[]"
+          label="Crop"
+          density="comfortable"
+          variant="outlined"
+          hide-details
+          prepend-inner-icon="mdi-corn"
+          class="mb-3"
+        />
+        <v-select
+          v-model="fieldFilter"
+          :items="fieldOptions"
+          label="Field"
+          density="comfortable"
+          variant="outlined"
+          hide-details
+          prepend-inner-icon="mdi-map-marker-outline"
+        />
+        <div class="d-flex justify-end mt-4">
+          <v-btn
+            variant="text"
+            color="primary"
+            size="small"
+            @click="filterMenuOpen = false"
+          >
+            Done
+          </v-btn>
+        </div>
+      </v-card>
+    </v-menu>
   </v-app-bar>
 
   <v-main class="bg-background">
@@ -908,11 +936,6 @@ const totalRevenueFiltered = computed(() => {
           </v-card>
         </v-col>
       </v-row>
-
-      <div class="text-center text-caption text-medium-emphasis mt-8 mb-4">
-        {{ metrics.meta.farmName }} · {{ metrics.meta.location }} ·
-        {{ metrics.meta.cropYear }} crop year
-      </div>
     </v-container>
   </v-main>
 </template>
@@ -920,5 +943,15 @@ const totalRevenueFiltered = computed(() => {
 <style scoped>
 .letter-spacing-1 {
   letter-spacing: 0.06em;
+}
+
+.app-title {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+.app-title :deep(.v-toolbar-title__placeholder) {
+  overflow: visible;
+  text-overflow: clip;
+  white-space: nowrap;
 }
 </style>
